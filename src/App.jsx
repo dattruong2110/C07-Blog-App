@@ -1,9 +1,9 @@
-import AppRouter from "./router/AppRouter";
+import Authenticator from "./hoc/Authenticator";
 
 function App() {
   return (
     <>
-      <AppRouter />
+      <Authenticator />
     </>
   );
 }

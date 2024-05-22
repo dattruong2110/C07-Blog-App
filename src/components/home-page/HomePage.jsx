@@ -3,12 +3,7 @@ import Header from "../header/Header";
 import Navbar from "../Navbar/Navbar";
 
 const HomePage = () => {
-  return (
-    <Fragment>
-      <Header />
-      <Navbar />
-    </Fragment>
-  );
+  return <Fragment></Fragment>;
 };
 
 export default HomePage;
