@@ -2,7 +2,7 @@ import React from "react";
 
 const columns = [
   {
-    href: "/Dashboard?=Users",
+    href: "/Dashboard",
     title: "Users",
   },
   {
