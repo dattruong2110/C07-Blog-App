@@ -1,15 +1,10 @@
 import { Route, Routes } from "react-router";
-import DashboardLayout from "../layouts/DashboardLayout";
-import UserDashboardPage from "../components/dashboard-page/UserDashboardPage";
-
-const ROUTE_DATA = [
-  { path: "/dashboard", element: UserDashboardPage, layout: DashboardLayout },
-];
+import { PRIVATE_ROUTE_DATA } from "../utils/AppContants";
 
 const PrivateRoutes = () => {
   return (
     <Routes>
-      {ROUTE_DATA.map((route, index) => {
+      {PRIVATE_ROUTE_DATA.map((route, index) => {
         const Layout = route.layout;
         const Page = route.element;
         return (
