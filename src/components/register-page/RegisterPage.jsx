@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -8,8 +8,10 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [avatar, setAvatar] = useState("");
   const avatarInputRef = useRef(null);
@@ -80,9 +82,15 @@ const RegisterPage = () => {
         }
 
         const result = await response.json();
-        alert("Registration successful!");
-
         console.log(result);
+
+        if (result.message === "Register success") {
+          alert("Registration successfully!");
+          navigate("/login");
+        } else {
+          alert("Registration failed!");
+        }
+
         formik.resetForm();
         if (avatarInputRef.current) {
           avatarInputRef.current.value = "";
