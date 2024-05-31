@@ -49,13 +49,13 @@ const LoginPage = () => {
 
         if (result.status === "OK") {
           alert("Login successfully!");
+          localStorage.setItem("user", JSON.stringify(result));
+          if (values.rememberMe) {
+            localStorage.setItem("user", JSON.stringify(result));
+          }
           navigate("/");
         } else {
           alert("Login failed!");
-        }
-
-        if (values.rememberMe) {
-          localStorage.setItem("user", JSON.stringify(result));
         }
 
         formik.resetForm();
