@@ -1,9 +1,11 @@
-import { Fragment } from "react";
-import Header from "../header/Header";
-import Navbar from "../Navbar/Navbar";
+import HomePageFact from "./home-page-fact/HomePageFact";
 
 const HomePage = () => {
-  return <Fragment></Fragment>;
+  return (
+    <>
+      <HomePageFact />
+    </>
+  );
 };
 
 export default HomePage;
