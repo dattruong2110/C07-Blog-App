@@ -3,9 +3,9 @@ import Sidebar from "../components/dashboard-page/sidebar/Sidebar";
 
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="w-full h-full flex justify-between gap-2">
+    <div className="w-full h-[100vh] flex justify-between gap-2 overflow-hidden font-mono">
       <Sidebar />
-      <main className="w-4/5 h-full">{children}</main>
+      <main className="w-4/5 h-full overflow-x-auto">{children}</main>
     </div>
   );
 };
