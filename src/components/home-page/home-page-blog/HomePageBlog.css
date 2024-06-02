@@ -1,0 +1,31 @@
+.blog-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 20px;
+}
+
+.quick-view-posts-container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.bg-white {
+  overflow-y: auto;
+}
+
+.quick-view-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 70%;
+}
+
+.quick-view-title:hover {
+  color: #3986ee;
+}
+
+img.quick-view-picture {
+  width: 100px;
+  height: 60px;
+}
