@@ -38,8 +38,6 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
     }
   };
 
-  console.log("blogs: ", blogs);
-
   return (
     <div className="container mx-auto px-20 pb-5">
       {isHomePage && (
