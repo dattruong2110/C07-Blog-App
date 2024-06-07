@@ -9,9 +9,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../features/authSlice.js";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const [avatar, setAvatar] = useState("");
   const avatarInputRef = useRef(null);
@@ -63,34 +67,14 @@ const RegisterPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       const data = { ...values, avatar };
-      console.log(data);
-
       try {
-        const response = await fetch(
-          "http://localhost:8080/api/auth/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const result = await response.json();
-        console.log(result);
-
+        const result = await dispatch(register(data)).unwrap();
         if (result.message === "Register success") {
           alert("Registration successfully!");
           navigate("/login");
         } else {
           alert("Registration failed!");
         }
-
         formik.resetForm();
         if (avatarInputRef.current) {
           avatarInputRef.current.value = "";
@@ -112,7 +96,6 @@ const RegisterPage = () => {
       };
       reader.readAsDataURL(file);
     }
-    console.log(file);
   };
 
   return (

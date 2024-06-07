@@ -9,9 +9,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../features/authSlice.js";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -31,21 +35,7 @@ const LoginPage = () => {
       };
 
       try {
-        const response = await fetch("http://localhost:8080/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const result = await response.json();
-
-        console.log(result);
+        const result = await dispatch(login(data)).unwrap();
 
         if (result.status === "OK") {
           alert("Login successfully!");

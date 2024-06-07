@@ -38,8 +38,6 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
     }
   };
 
-  console.log("blogs: ", blogs);
-
   return (
     <div className="container mx-auto px-20 pb-5">
       {isHomePage && (
@@ -66,7 +64,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
           </div>
 
           <div className="quick-view-posts-container">
-            <div className="bg-white p-4 rounded shadow overflow-y-auto">
+            <div className="bg-white p-4 rounded shadow overflow-y-auto mt-4">
               <h2 className="text-xl font-bold mb-4">Xem nhanh</h2>
               <ul>
                 {quickViewPosts.map((post) => (
