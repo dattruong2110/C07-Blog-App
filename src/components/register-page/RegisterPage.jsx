@@ -112,7 +112,6 @@ const RegisterPage = () => {
       };
       reader.readAsDataURL(file);
     }
-    console.log(file);
   };
 
   return (
