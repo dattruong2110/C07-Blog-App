@@ -66,7 +66,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
           </div>
 
           <div className="quick-view-posts-container">
-            <div className="bg-white p-4 rounded shadow overflow-y-auto">
+            <div className="bg-white p-4 rounded shadow overflow-y-auto mt-4">
               <h2 className="text-xl font-bold mb-4">Xem nhanh</h2>
               <ul>
                 {quickViewPosts.map((post) => (
