@@ -1,11 +1,11 @@
-import HomePageBlog from "./home-page-blog/HomePageBlog";
-import HomePageFact from "./home-page-fact/HomePageFact";
+import NewsFeedBlog from "../newsfeed-blog/NewsFeedBlog";
+import HomePageFact from "../fact/Fact";
 
 const HomePage = () => {
   return (
     <>
-      <HomePageFact />
-      <HomePageBlog />
+      <HomePageFact isHomePage={true} />
+      <NewsFeedBlog isHomePage={true} />
     </>
   );
 };
