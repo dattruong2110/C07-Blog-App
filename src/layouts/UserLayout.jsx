@@ -1,12 +1,13 @@
+import React from "react";
 import Header from "../components/header/Header";
-import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/footer/Footer";
+import UserPageProfile from "../components/user-page-profile/UserPageProfile";
 
 const UserLayout = ({ children }) => {
   return (
     <div className="user-layout">
       <Header />
-      <Navbar />
+      <UserPageProfile />
       <main>{children}</main>
       <Footer />
     </div>

@@ -1,9 +1,13 @@
-import { Fragment } from "react";
-import Header from "../header/Header";
-import Navbar from "../Navbar/Navbar";
+import NewsFeedBlog from "../newsfeed-blog/NewsFeedBlog";
+import HomePageFact from "../fact/Fact";
 
 const HomePage = () => {
-  return <Fragment></Fragment>;
+  return (
+    <>
+      <HomePageFact isHomePage={true} />
+      <NewsFeedBlog isHomePage={true} />
+    </>
+  );
 };
 
 export default HomePage;

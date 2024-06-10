@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
 
@@ -26,6 +29,25 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.error("Error parsing user from localStorage:", error);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUser(null);
+    localStorage.removeItem("user");
+  };
 
   return (
     <header>
@@ -65,24 +87,45 @@ const Header = () => {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end relative">
           <div className="flex items-center">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
-              Viết bài chia sẻ
-            </button>
+            {!isLoggedIn ? (
+              <>
+                <button
+                  type="button"
+                  className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  id="user-menu-button"
+                  aria-expanded={isDropdownOpen ? "true" : "false"}
+                  aria-haspopup="true"
+                  onClick={toggleDropdown}
+                >
+                  <img
+                    className="h-8 w-8 rounded-full"
+                    src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+                    alt=""
+                  />
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
+                  Viết bài chia sẻ
+                </button>
 
-            <button
-              type="button"
-              className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              id="user-menu-button"
-              aria-expanded={isDropdownOpen ? "true" : "false"}
-              aria-haspopup="true"
-              onClick={toggleDropdown}
-            >
-              <img
-                className="h-8 w-8 rounded-full"
-                src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c556dc82-5d1c-4ce6-b6e2-03060f594908/defx4ci-fd1d1413-afe4-460c-b5b6-b6a3a6d6b8af.png/v1/fill/w_768,h_768,q_80,strp/vegito_blue_by_menamezapiero_defx4ci-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzY4IiwicGF0aCI6IlwvZlwvYzU1NmRjODItNWQxYy00Y2U2LWI2ZTItMDMwNjBmNTk0OTA4XC9kZWZ4NGNpLWZkMWQxNDEzLWFmZTQtNDYwYy1iNWI2LWI2YTNhNmQ2YjhhZi5wbmciLCJ3aWR0aCI6Ijw9NzY4In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.JlAoh-v8CXavp1s9hOFqxWrPw1qRRwiEOMTzmQXPBYo"
-                alt=""
-              />
-            </button>
+                <button
+                  type="button"
+                  className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  id="user-menu-button"
+                  aria-expanded={isDropdownOpen ? "true" : "false"}
+                  aria-haspopup="true"
+                  onClick={toggleDropdown}
+                >
+                  <img
+                    className="h-8 w-8 rounded-full"
+                    src={user.data.avatar}
+                    alt=""
+                  />
+                </button>
+              </>
+            )}
           </div>
           {isDropdownOpen && (
             <div
@@ -93,33 +136,58 @@ const Header = () => {
               tabIndex="-1"
               ref={dropdownRef}
             >
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700"
-                role="menuitem"
-                tabIndex="-1"
-                id="user-menu-item-0"
-              >
-                Your Profile
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700"
-                role="menuitem"
-                tabIndex="-1"
-                id="user-menu-item-1"
-              >
-                Settings
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700"
-                role="menuitem"
-                tabIndex="-1"
-                id="user-menu-item-2"
-              >
-                Sign out
-              </a>
+              {isLoggedIn ? (
+                <>
+                  <a
+                    href="/profile"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabIndex="-1"
+                    id="user-menu-item-0"
+                  >
+                    Trang cá nhân
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabIndex="-1"
+                    id="user-menu-item-1"
+                  >
+                    Thông tin cá nhân
+                  </a>
+                  <a
+                    className="block px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                    role="menuitem"
+                    tabIndex="-1"
+                    id="user-menu-item-2"
+                    onClick={handleLogout}
+                  >
+                    Đăng xuất
+                  </a>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabIndex="-1"
+                    id="user-menu-item-0"
+                  >
+                    Đăng nhập
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabIndex="-1"
+                    id="user-menu-item-1"
+                  >
+                    Đăng ký
+                  </Link>
+                </>
+              )}
             </div>
           )}
         </div>
