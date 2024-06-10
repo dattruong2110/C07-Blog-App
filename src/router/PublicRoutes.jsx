@@ -7,12 +7,15 @@ import RegisterPage from "../components/register-page/RegisterPage";
 import RegisterLayout from "../layouts/RegisterLayout";
 import UserPage from "../components/user-page/UserPage";
 import UserLayout from "../layouts/UserLayout";
+import Blog from "../components/blog/Blog";
+import BlogLayout from "../layouts/BlogLayout";
 
 const ROUTE_DATA = [
   { path: "/", element: HomePage, layout: HomeLayout },
   { path: "/login", element: LoginPage, layout: LoginLayout },
   { path: "/register", element: RegisterPage, layout: RegisterLayout },
   { path: "/profile", element: UserPage, layout: UserLayout },
+  { path: "/blog/:id", element: Blog, layout: BlogLayout },
 ];
 
 const PublicRoutes = () => {

@@ -1,0 +1,16 @@
+.blog-container {
+    background-color: rgb(241, 241, 248);
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    padding-top: 140px;
+}
+
+.left-container {
+    width: 70%;
+    padding-left: 20px;
+}
+
+.right-container {
+    width: 30%;
+}
