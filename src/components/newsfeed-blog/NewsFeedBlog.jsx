@@ -44,7 +44,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="col-span-2">
             {blogs.map((blog) => (
-              <a href="/" key={blog.id}>
+              <a href={`/blog/${blog.id}`} key={blog.id}>
                 <div className="blog-container bg-white p-4 rounded shadow mt-4">
                   <img
                     src={blog.picture}
