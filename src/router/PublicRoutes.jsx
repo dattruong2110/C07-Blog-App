@@ -7,12 +7,18 @@ import RegisterPage from "../components/register-page/RegisterPage";
 import RegisterLayout from "../layouts/RegisterLayout";
 import UserPage from "../components/user-page/UserPage";
 import UserLayout from "../layouts/UserLayout";
+import Blog from "../components/blog/Blog";
+import BlogLayout from "../layouts/BlogLayout";
+import FactPage from "../components/fact-page/FactPage";
+import FactLayout from "../layouts/FactLayout";
 
 const ROUTE_DATA = [
   { path: "/", element: HomePage, layout: HomeLayout },
   { path: "/login", element: LoginPage, layout: LoginLayout },
   { path: "/register", element: RegisterPage, layout: RegisterLayout },
   { path: "/profile/:userId", element: UserPage, layout: UserLayout },
+  { path: "/blog/:id", element: Blog, layout: BlogLayout },
+  { path: "/fact", element: FactPage, layout: FactLayout },
 ];
 
 const PublicRoutes = () => {
