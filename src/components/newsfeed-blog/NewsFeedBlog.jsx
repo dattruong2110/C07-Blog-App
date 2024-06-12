@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./NewsFeddBlog.css";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
   const [blogs, setBlogs] = useState([]);
@@ -8,9 +9,6 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
   const auth = useSelector((state) => state.auth);
   const userId =
     (auth.user ? auth.user.id : null) || (auth.user ? auth.user.data.id : null);
-
-  console.log("auth: ", auth);
-  console.log("userId: ", userId);
 
   const fetchBlogs = async () => {
     try {
@@ -59,7 +57,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
           <div className="col-span-2">
             {blogs.length !== 0
               ? blogs?.map((blog, index) => (
-                  <a href="/" key={index}>
+                  <Link to={`/blog/${blog.id}`} key={index}>
                     <div className="blog-container bg-white p-4 rounded shadow mt-4">
                       <img
                         src={blog.picture}
@@ -78,7 +76,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
                         </span>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 ))
               : ""}
           </div>
@@ -89,7 +87,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
               <ul>
                 {quickViewPosts.length !== 0
                   ? quickViewPosts?.map((post, index) => (
-                      <a href="/" key={index}>
+                      <Link to="/" key={index}>
                         <li className="flex items-center mb-4">
                           <span className="quick-view-title mr-4 font-semibold">
                             {post.title}
@@ -100,7 +98,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
                             className="quick-view-picture w-12 h-12 object-cover rounded"
                           />
                         </li>
-                      </a>
+                      </Link>
                     ))
                   : ""}
               </ul>
@@ -113,7 +111,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
           <div className="col-span-2">
             {blogs.length !== 0
               ? blogs.map((blog, index) => (
-                  <a href="/" key={index}>
+                  <Link to={`/blog/${blog.id}`} key={index}>
                     <div className="blog-container bg-white p-4 rounded shadow mt-4">
                       <img
                         src={blog.picture}
@@ -132,7 +130,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
                         </span>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 ))
               : ""}
           </div>
