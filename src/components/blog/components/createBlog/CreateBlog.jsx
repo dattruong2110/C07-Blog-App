@@ -7,11 +7,28 @@ import { useRef, useState } from "react";
 const cx = classNames.bind(styles);
 export default function CreateBlog() {
   const [title, setTitle] = useState("");
-  const [img, setImg] = useState("")
+  const [content, setContent] = useState("");
+  const [img, setImg] = useState("");
+  const [description, setDescription] = useState("")
+  const [blog, setBlog] =useState({
+    title: title,
+    content: content,
+    picture:{
+      url: img,
+      description: description
+    },
+    category: "ca",
+    userId: "id"
+  });
   const handleChangeTitle = (e)=>{
     setTitle(e.target.value)
-    console.log(title);
   };
+  const handleChangeContent = (e) => {
+    setContent(e.target.value)
+  }
+  const handleChangeDescription = (e) => {
+    setDescription(e.target.value)
+  }
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -38,13 +55,34 @@ export default function CreateBlog() {
             {title.length}/100 ký tự
           </span>
         </div>
+
         <div className={cx("input-img")}>
+          <p>
+            Nhập vào hình ảnh
+          </p>
             <input
               type="file"
               ref={imgInputRef}
               onChange={handleFileChange}
               className="block w-full p-2 rounded shadow bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none"
             />
+        </div>
+        <div>
+          <p>
+            Nhập vào mô tả của hình ảnh
+          </p>
+          <input value={description} onChange={handleChangeDescription}/>
+        </div>
+        <div className={cx("input-content")}>
+          <textarea 
+            onChange={handleChangeContent} 
+            placeholder="Nhập nội dung bài viết..." 
+            value={content}
+            >
+          </textarea>
+          <span>
+            {content.length} ký tự
+          </span>
         </div>
     </div>
   )
