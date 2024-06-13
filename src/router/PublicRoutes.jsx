@@ -9,6 +9,7 @@ import UserPage from "../components/user-page/UserPage";
 import UserLayout from "../layouts/UserLayout";
 import Blog from "../components/blog/Blog";
 import BlogLayout from "../layouts/BlogLayout";
+import CreateBlog from "../components/blog/components/createBlog/CreateBlog";
 
 const ROUTE_DATA = [
   { path: "/", element: HomePage, layout: HomeLayout },
@@ -16,6 +17,7 @@ const ROUTE_DATA = [
   { path: "/register", element: RegisterPage, layout: RegisterLayout },
   { path: "/profile", element: UserPage, layout: UserLayout },
   { path: "/blog/:id", element: Blog, layout: BlogLayout },
+  { path: "/blog/create", element: CreateBlog, layout: BlogLayout },
 ];
 
 const PublicRoutes = () => {
