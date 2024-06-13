@@ -69,7 +69,7 @@ const UserPageProfile = () => {
           <p className="text-gray-500 inline">
             Likes:{" "}
             <h2 className="text-lg text-gray-800 font-semibold inline">
-              35,931
+              {blogs.like || 0}
             </h2>
           </p>
         </div>
