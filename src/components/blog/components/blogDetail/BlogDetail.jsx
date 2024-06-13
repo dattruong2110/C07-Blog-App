@@ -4,9 +4,11 @@ import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames/bind";
 import styles from "./BlogDetail.module.scss";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 const cx = classNames.bind(styles);
 export default function BlogDetail({ id }) {
+  const navigate = useNavigate();
   const [blog, setBlog] = useState({});
   useEffect(() => {
     const fetchBlog = async () => {
@@ -21,6 +23,10 @@ export default function BlogDetail({ id }) {
     fetchBlog();
   }, []);
 
+  const goToUser = () => {
+    navigate(`/profile/${blog.user?.id}`);
+  };
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("category")}>
@@ -32,11 +38,13 @@ export default function BlogDetail({ id }) {
       </div>
       <div className={cx("title")}>{blog.title}</div>
       <div className={cx("user")}>
-        <div className={cx("user-avt")}>
+        <div className={cx("user-avt")} onClick={goToUser}>
           <img className={cx("img")} src={blog.user?.avatar} />
         </div>
         <div className={cx("user-des")}>
-          <div className={cx("username")}>{blog.user?.fullName}</div>
+          <div className={cx("username")} onClick={goToUser}>
+            {blog.user?.fullName}
+          </div>
           <div className={cx("posting-time")}>21/5/2024 12:35</div>
         </div>
       </div>

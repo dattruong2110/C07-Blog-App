@@ -46,6 +46,7 @@ const Header = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUser(null);
+    setIsDropdownOpen(false);
     localStorage.removeItem("user");
   };
 

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import "./NewsFeddBlog.css";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import "./NewsFeedBlog.css";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { fetchUserById } from "../../features/userSlice";
 
 const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
+  const { userId } = useParams();
+  const dispatch = useDispatch();
   const [blogs, setBlogs] = useState([]);
   const [quickViewPosts, setQuickViewPosts] = useState([]);
-  const auth = useSelector((state) => state.auth);
-  const userId =
-    (auth.user ? auth.user.id : null) || (auth.user ? auth.user.data.id : null);
+  const { selectedUser, status, error } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (isUserPage && userId) {
+      dispatch(fetchUserById(userId));
+    }
+  }, [isUserPage, userId, dispatch]);
 
   const fetchBlogs = async () => {
     try {
@@ -50,6 +57,24 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
     }
   };
 
+  if (status === "loading") {
+    return (
+      <div className="spinner-container">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
+
+  if (isUserPage && !selectedUser) {
+    return <div>No user data found</div>;
+  }
+
   return (
     <div className="container mx-auto px-20 pb-5">
       {isHomePage && (
@@ -72,7 +97,9 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
                           <p>{blog.content}</p>
                         </div>
                         <span className="font-medium">
-                          {blog.user?.username}
+                          <Link to={`/profile/${blog.user?.id}`}>
+                            {blog.user?.username}
+                          </Link>
                         </span>
                       </div>
                     </div>
@@ -83,11 +110,11 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
 
           <div className="quick-view-posts-container">
             <div className="bg-white p-4 rounded shadow overflow-y-auto mt-4">
-              <h2 className="text-xl font-bold mb-4">Xem nhanh</h2>
+              <h2 className="text-xl font-bold mb-4">Quick View</h2>
               <ul>
                 {quickViewPosts.length !== 0
                   ? quickViewPosts?.map((post, index) => (
-                      <Link to="/" key={index}>
+                      <Link to={`/blog/${post.id}`} key={index}>
                         <li className="flex items-center mb-4">
                           <span className="quick-view-title mr-4 font-semibold">
                             {post.title}
@@ -126,7 +153,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
                           <p>{blog.content}</p>
                         </div>
                         <span className="font-medium">
-                          {auth.user.username || auth.user.data.username}
+                          {selectedUser.username}
                         </span>
                       </div>
                     </div>
