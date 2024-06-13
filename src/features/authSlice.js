@@ -33,14 +33,19 @@ export const register = createAsyncThunk(
   }
 );
 
+const storedUser = localStorage.getItem("user");
+const storedStatus = localStorage.getItem("status");
+
+const initialState = {
+  user: storedUser ? JSON.parse(storedUser) : null,
+  token: null,
+  status: storedStatus ? storedStatus : "idle",
+  error: null,
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: null,
-    token: null,
-    status: "idle",
-    error: null,
-  },
+  initialState: initialState,
   reducers: {
     setCredentials: (state, action) => {
       const { user, token } = action.payload;
@@ -56,26 +61,32 @@ const authSlice = createSlice({
     builder
       .addCase(login.pending, (state) => {
         state.status = "loading";
+        localStorage.setItem("status", "loading");
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.user = action.payload.user;
+        localStorage.setItem("status", "succeeded");
+        state.user = action.payload.data;
         state.token = action.payload.token;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
+        localStorage.setItem("status", "failed");
         state.error = action.payload;
       })
       .addCase(register.pending, (state) => {
         state.status = "loading";
+        localStorage.setItem("status", "loading");
       })
       .addCase(register.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.user = action.payload.user;
+        localStorage.setItem("status", "succeeded");
+        state.user = action.payload.data;
         state.token = action.payload.token;
       })
       .addCase(register.rejected, (state, action) => {
         state.status = "failed";
+        localStorage.setItem("status", "failed");
         state.error = action.payload;
       });
   },
