@@ -1,8 +1,8 @@
-import React from 'react'
-import Header from '../components/header/Header';
-import Footer from '../components/footer/Footer';
+import React from "react";
+import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
 
-const FactLayout = () => {
+const FactLayout = ({ children }) => {
   return (
     <div className="home-layout">
       <Header />
@@ -10,6 +10,6 @@ const FactLayout = () => {
       <Footer />
     </div>
   );
-}
+};
 
-export default FactLayout
+export default FactLayout;
