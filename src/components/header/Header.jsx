@@ -46,6 +46,7 @@ const Header = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUser(null);
+    setIsDropdownOpen(false);
     localStorage.removeItem("user");
   };
 
@@ -56,13 +57,13 @@ const Header = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1 items-center">
-          <a href="/" className="-m-1.5 p-1.5">
+          <Link to="/" className="-m-1.5 p-1.5">
             <img
               className="h-8 w-auto"
               src="https://static.topcv.vn/company_logos/0ZT9refQobeAkpzsYWBdyaki10IlbFB4_1655288503____f48c9fc932b36c4eec44ec23d223fa18.png"
               alt=""
             />
-          </a>
+          </Link>
           <div className="relative ml-8" ref={searchRef}>
             <input
               type="text"
@@ -120,7 +121,10 @@ const Header = () => {
                 >
                   <img
                     className="h-8 w-8 rounded-full"
-                    src={user.data.avatar}
+                    src={
+                      user?.data?.avatar ||
+                      "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+                    }
                     alt=""
                   />
                 </button>
@@ -138,15 +142,15 @@ const Header = () => {
             >
               {isLoggedIn ? (
                 <>
-                  <a
-                    href="/profile"
+                  <Link
+                    to={`/profile/${user.data.id}`}
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
                     tabIndex="-1"
                     id="user-menu-item-0"
                   >
                     Trang cá nhân
-                  </a>
+                  </Link>
                   <a
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700"
