@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = ({ columns, data, title, subTitle }) => {
+const Table = ({ columns = [], data = [], title, subTitle }) => {
   const Search = () => {
     return (
       <>
