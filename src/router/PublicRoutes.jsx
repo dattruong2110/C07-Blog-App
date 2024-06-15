@@ -23,7 +23,7 @@ const ROUTE_DATA = [
   { path: "/blog/create", element: CreateBlog, layout: BlogLayout },
 ];
 
-const PublicRoutes = () => {
+const PublicRoutes = ({ isAuthed }) => {
   return (
     <Routes>
       {ROUTE_DATA.map((route, index) => {
@@ -34,7 +34,7 @@ const PublicRoutes = () => {
             key={index}
             path={route.path}
             element={
-              <Layout>
+              <Layout {...(isAuthed ? { isAuthed } : {})}>
                 <Page />
               </Layout>
             }
