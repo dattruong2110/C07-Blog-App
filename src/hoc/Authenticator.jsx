@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import PrivateRoutes from "../router/PrivateRoutes";
 import PublicRoutes from "../router/PublicRoutes";
 import { useSelector } from "react-redux";
-import Navbar from "../components/Navbar/Navbar";
-import Header from "../components/header/Header";
 
 const Authenticator = () => {
   const [isAuthed, setIsAuthed] = useState(false);
@@ -26,8 +24,6 @@ const Authenticator = () => {
 
   return (
     <>
-      {/* <Header />
-      <Navbar isAuthed={isAuthed} /> */}
       {isAuthed ? (
         <>
           <PrivateRoutes />

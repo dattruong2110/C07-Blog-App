@@ -1,8 +1,15 @@
 import React from "react";
+import "./FactPage.css"
 
 const FactPage = () => {
   return (
-    <>
+    <div className="fact-content">
+      <button
+        class="middle none center rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none btn-add-fact"
+        data-ripple-light="true"
+      >
+        TẠO BÀO VIẾT
+      </button>
       <main className="h-full w-full bg-gray-50 flex items-center justify-center">
         <div className="border max-w-screen-md bg-white mt-6 rounded-2xl p-4">
           <div className="flex items-center	justify-between">
@@ -497,7 +504,7 @@ const FactPage = () => {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 };
 
