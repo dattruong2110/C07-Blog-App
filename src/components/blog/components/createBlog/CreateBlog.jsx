@@ -4,6 +4,7 @@ import axios from "axios";
 import classNames from "classnames/bind";
 
 import styles from "./CreateBlog.module.scss";
+import { useNavigate } from "react-router";
 
 const cx = classNames.bind(styles);
 export default function CreateBlog() {
@@ -12,6 +13,7 @@ export default function CreateBlog() {
   //   console.log(state);
   // });
 
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [url, setUrl] = useState("");
@@ -29,10 +31,8 @@ export default function CreateBlog() {
         description,
       },
       category,
-      userId: "a607524e-e833-4cd5-a1ed-c1d12fe9d9be",
+      userId: "ecd5be9d-bca2-4461-9d13-857df8982c95",
     };
-
-    console.log("postData: ", postData);
 
     try {
       const response = await axios.post(
@@ -40,6 +40,7 @@ export default function CreateBlog() {
         postData
       );
       console.log("Response:", response.data);
+      navigate("/");
     } catch (error) {
       console.error("Error submitting form:", error);
     }

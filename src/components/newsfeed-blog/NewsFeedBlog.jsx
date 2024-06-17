@@ -120,7 +120,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
                             {post.title}
                           </span>
                           <img
-                            src={post.picture}
+                            src={post.picture?.url}
                             alt={post.title}
                             className="quick-view-picture w-12 h-12 object-cover rounded"
                           />
