@@ -13,7 +13,6 @@ export const fetchUserById = createAsyncThunk("/user/:id", async (userId) => {
 });
 
 export const removeUser = createAsyncThunk("/user/:id/delete", async (userId) => {
-    console.log(typeof  userId, "userId")
     const response = await axios.delete(`${C07_BLOG_WEB_API}/user/${userId}`);
     return response.data;
 });
