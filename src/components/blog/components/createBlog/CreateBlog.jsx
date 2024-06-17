@@ -10,9 +10,9 @@ const cx = classNames.bind(styles);
 export default function CreateBlog() {
 
   
-  const userId = useSelector((state) => {state.user.id
-    console.log(state);
-  });
+  // const userId = useSelector((state) => {state.user.id
+  //   console.log(state);
+  // });
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
