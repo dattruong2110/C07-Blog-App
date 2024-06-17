@@ -26,7 +26,6 @@ const Fact = ({ isHomePage, isUserPage }) => {
       }
 
       const data = await response.json();
-      console.log("data: ", data);
       let factsData = isUserPage ? data.facts : data;
 
       setFacts(factsData);
@@ -103,13 +102,13 @@ const Fact = ({ isHomePage, isUserPage }) => {
                         />
                         <div className="absolute top-2 left-2 w-10 h-10 rounded-full overflow-hidden border-2 border-white">
                           <img
-                            src={fact?.user.avatar}
+                            src={fact?.user?.avatar}
                             alt="Avatar"
                             className="w-full h-full object-cover"
                           />
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm">
-                          {fact?.user.username}
+                          {fact?.user?.username}
                         </div>
                       </div>
                     );
