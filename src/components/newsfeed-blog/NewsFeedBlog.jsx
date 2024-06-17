@@ -37,7 +37,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
       console.error("Error fetching blogs: ", error);
     }
   };
-
+  console.log(blogs);
   useEffect(() => {
     fetchBlogs();
   }, [isUserPage, userId]);
@@ -85,7 +85,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
                   <Link to={`/blog/${blog.id}`} key={index}>
                     <div className="blog-container bg-white p-4 rounded shadow mt-4">
                       <img
-                        src={blog.picture}
+                        src={blog.picture?.url}
                         alt={blog.title}
                         className="blog-image w-64 h-auto object-cover rounded mr-4"
                       />
@@ -141,7 +141,7 @@ const NewsFeedBlog = ({ isHomePage, isUserPage }) => {
                   <Link to={`/blog/${blog.id}`} key={index}>
                     <div className="blog-container bg-white p-4 rounded shadow mt-4">
                       <img
-                        src={blog.picture}
+                        src={blog.picture?.url}
                         alt={blog.title}
                         className="blog-image w-64 h-auto object-cover rounded mr-4"
                       />
