@@ -1,27 +1,56 @@
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 import classNames from "classnames/bind";
 
 import styles from './CreateBlog.module.scss';
-import { useRef, useState } from "react";
 
 
 const cx = classNames.bind(styles);
 export default function CreateBlog() {
+
+  
+  const userId = useSelector((state) => {state.user.id
+    console.log(state);
+  });
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [img, setImg] = useState("");
-  const [description, setDescription] = useState("")
-  const [blog, setBlog] =useState({
-    title: title,
-    content: content,
-    picture:{
-      url: img,
-      description: description
-    },
-    category: "ca",
-    userId: "id"
-  });
+  const [urlImg, setUrlImg] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [categories, setCategories] = useState([]);
+
+  const handleSubmit = async (e) => {
+        e.preventDefault();
+        const postData = {
+            title,
+            content,
+            picture:{
+              urlImg,
+              description
+            },
+            category,
+            userId:"02a68641-5a92-45ff-8bda-a67b6cb08700"
+        };
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/blog', postData);
+            console.log('Response:', response.data);
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
+    };
+
+  useEffect(() => {
+        axios.get('http://localhost:8080/api/blog/category')
+            .then(response => {setCategories(response.data)
+              console.log(response.data);
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }, []);
   const handleChangeTitle = (e)=>{
-    setTitle(e.target.value)
+    setTitle(e.target.value);
   };
   const handleChangeContent = (e) => {
     setContent(e.target.value)
@@ -34,12 +63,12 @@ export default function CreateBlog() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImg(reader.result)
-        console.log(img);
+        setUrlImg(reader.result)
       };
       reader.readAsDataURL(file);
     }
   };
+
   
   const imgInputRef = useRef(null);
   return (
@@ -60,18 +89,15 @@ export default function CreateBlog() {
           <p>
             Nhập vào hình ảnh
           </p>
-            <input
-              type="file"
-              ref={imgInputRef}
-              onChange={handleFileChange}
-              className="block w-full p-2 rounded shadow bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none"
-            />
-        </div>
-        <div>
-          <p>
-            Nhập vào mô tả của hình ảnh
-          </p>
-          <input value={description} onChange={handleChangeDescription}/>
+          <input
+            type="file"
+            ref={imgInputRef}
+            onChange={handleFileChange}
+            className="block w-full p-2 rounded shadow bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none"
+          />
+          <div className={cx("input-img")}>
+            <input placeholder="Nhập mô tả của hình ảnh" value={description} onChange={handleChangeDescription}/>
+          </div>
         </div>
         <div className={cx("input-content")}>
           <textarea 
@@ -83,6 +109,21 @@ export default function CreateBlog() {
           <span>
             {content.length} ký tự
           </span>
+        </div>
+        <div>
+            <label>Category:</label>
+            <select value={category} onChange={(e) => setCategory(e.target.value)
+            }>
+                <option value="">Select Category</option>
+                {categories.map(cat => (
+                    <option key={cat.id} value={cat.name}>{cat.name}</option>
+                ))}
+            </select>
+        </div>
+        <div className={cx("submit-btn")}>
+            <button className={cx("btn")} onClick={handleSubmit}>
+              Đăng bài viết
+            </button>
         </div>
     </div>
   )
