@@ -1,5 +1,16 @@
 import { Route, Routes } from "react-router";
-import { PRIVATE_ROUTE_DATA } from "../utils/AppContants";
+import DashboardPage from "../components/dashboard-page/DashboardPage.jsx";
+import DashboardLayout from "../layouts/DashboardLayout.jsx";
+import UserDashboardPage from "../components/dashboard-page/user/UserDashboardPage.jsx";
+
+const PRIVATE_ROUTE_DATA = [
+  { path: "/dashboard", element: DashboardPage, layout: DashboardLayout },
+  {
+    path: "/dashboard/users",
+    element: UserDashboardPage,
+    layout: DashboardLayout,
+  },
+];
 
 const PrivateRoutes = () => {
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,8 +11,10 @@ import {
   faCog,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import {useNavigate} from "react-router";
 
 const Sidebar = () => {
+  const navigation = useNavigate();
   const LinksTop = [
     {
       path: "/dashboard",
@@ -51,7 +53,7 @@ const Sidebar = () => {
       icon: faCog,
     },
     {
-      path: "/logout",
+      path: "/",
       name: "Log Out",
       icon: faSignOutAlt,
     },

@@ -27,6 +27,7 @@ const Fact = ({ isHomePage, isUserPage }) => {
 
       const data = await response.json();
       let factsData = isUserPage ? data.facts : data;
+      console.log("factsData: ", data)
 
       setFacts(factsData);
     } catch (error) {
@@ -93,8 +94,8 @@ const Fact = ({ isHomePage, isUserPage }) => {
                       >
                         <img
                           src={
-                            fact?.picture
-                              ? fact.picture
+                            fact?.picture?.url
+                              ? fact.picture?.url
                               : "https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-simple-gray-solid-color-background-image_557027.jpg"
                           }
                           alt="Story Image"
