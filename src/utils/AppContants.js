@@ -1,6 +1,6 @@
 import DashboardLayout from "../layouts/DashboardLayout";
 import DashboardPage from "../components/dashboard-page/DashboardPage";
-import UserDashboardPage from "../components/dashboard-page/UserDashboardPage";
+import UserDashboardPage from "../components/dashboard-page/user/UserDashboardPage.jsx";
 
 export const PRIVATE_ROUTE_DATA = [
   { path: "/dashboard", element: DashboardPage, layout: DashboardLayout },
