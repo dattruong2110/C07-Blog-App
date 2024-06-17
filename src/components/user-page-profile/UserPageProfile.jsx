@@ -58,7 +58,7 @@ const UserPageProfile = () => {
           <p className="text-gray-500 inline">
             Posts:{" "}
             <h2 className="text-lg text-gray-800 font-semibold inline">
-              {blogs.length}
+              {blogs?.length || 0}
             </h2>
           </p>
         </div>
@@ -69,7 +69,7 @@ const UserPageProfile = () => {
           <p className="text-gray-500 inline">
             Likes:{" "}
             <h2 className="text-lg text-gray-800 font-semibold inline">
-              {blogs.like || 0}
+              {blogs?.like || 0}
             </h2>
           </p>
         </div>
