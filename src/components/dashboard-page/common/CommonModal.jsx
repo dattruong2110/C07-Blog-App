@@ -31,13 +31,15 @@ function CommonModal({fields, openModal, setOpenModal, values, handleDelete, han
                             <h2 className="text-2xl font-semibold mb-4">Edit User</h2>
                             <form className={`w-max flex flex-col gap-4`}>
                                 {
-                                    fields && fields?.map((field, index) => {
+                                    fields?.map((field, index) => {
                                         return (
-                                            <InputField key={index}
-                                                        label={field}
-                                                        name={fields}
-                                                        value={localValues[index]}
-                                                        onChange={(e) => handleChange(e, index)}/>
+                                            <React.Fragment key={index}>
+                                                <InputField
+                                                    label={field}
+                                                    name={fields}
+                                                    value={localValues[index]}
+                                                    onChange={(e) => handleChange(e, index)}/>
+                                            </React.Fragment>
                                         );
                                     })
                                 }

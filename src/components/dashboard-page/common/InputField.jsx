@@ -1,5 +1,3 @@
-import React from 'react';
-
 function InputField({label, name, value, onChange, type = 'text'}) {
     return (
         <div className={`flex flex-col w-[20vw]`}>

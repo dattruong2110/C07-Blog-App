@@ -37,6 +37,7 @@ function UserDashboardPage() {
     const handleUpdate = (updatedValues) => {
         const updatedUser = { ...selectedUser, ...updatedValues };
         dispatch(updateUser(updatedUser));
+        setData(data.map(user => user.id === selectedUser.id ? updatedUser : user));
         setOpenModalUpdate(false);
     };
 
