@@ -1,6 +1,61 @@
+import { useParams } from "react-router";
 import "./Fact.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchUserById } from "../../features/userSlice";
 
-const HomePageFact = ({ isHomePage, isUserPage }) => {
+const Fact = ({ isHomePage, isUserPage }) => {
+  const { userId } = useParams();
+  const dispatch = useDispatch();
+  const [facts, setFacts] = useState([]);
+  const { selectedUser, status, error } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (isUserPage && userId) {
+      dispatch(fetchUserById(userId));
+    }
+  }, [isUserPage, userId, dispatch]);
+
+  const fetchBlogs = async () => {
+    try {
+      const response = isUserPage
+        ? await fetch(`http://localhost:8080/api/user/fact/${userId}`)
+        : await fetch("http://localhost:8080/api/fact");
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      let factsData = isUserPage ? data.facts : data;
+
+      setFacts(factsData);
+    } catch (error) {
+      console.error("Error fetching blogs: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, [isUserPage, userId]);
+
+  if (status === "loading") {
+    return (
+      <div className="spinner-container">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
+
+  if (isUserPage && !selectedUser) {
+    return <div>No user data found</div>;
+  }
+
   return (
     <>
       {isHomePage && (
@@ -29,23 +84,36 @@ const HomePageFact = ({ isHomePage, isUserPage }) => {
                 </div>
               </div>
 
-              <div className="relative w-32 h-56 rounded-lg overflow-hidden cursor-pointer">
-                <img
-                  src="https://modikiyojana.in/wp-content/uploads/2024/05/manchester-united-9.jpg"
-                  alt="Story Image"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-2 left-2 w-10 h-10 rounded-full overflow-hidden border-2 border-white">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/vi/a/a1/Man_Utd_FC_.svg"
-                    alt="Avatar"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm">
-                  Username
-                </div>
-              </div>
+              {facts.length !== 0
+                ? facts.map((fact, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="relative w-32 h-56 rounded-lg overflow-hidden cursor-pointer"
+                      >
+                        <img
+                          src={
+                            fact?.picture
+                              ? fact.picture
+                              : "https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-simple-gray-solid-color-background-image_557027.jpg"
+                          }
+                          alt="Story Image"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-2 left-2 w-10 h-10 rounded-full overflow-hidden border-2 border-white">
+                          <img
+                            src={fact?.user?.avatar}
+                            alt="Avatar"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm">
+                          {fact?.user?.username}
+                        </div>
+                      </div>
+                    );
+                  })
+                : ""}
             </div>
           </div>
         </div>
@@ -60,23 +128,38 @@ const HomePageFact = ({ isHomePage, isUserPage }) => {
           </div>
           <div className="overflow-x-auto pb-4 mt-2">
             <div className="flex space-x-4 fact-container">
-              <div className="relative w-32 h-56 rounded-lg overflow-hidden cursor-pointer">
-                <img
-                  src="https://modikiyojana.in/wp-content/uploads/2024/05/manchester-united-9.jpg"
-                  alt="Story Image"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-2 left-2 w-10 h-10 rounded-full overflow-hidden border-2 border-white">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/vi/a/a1/Man_Utd_FC_.svg"
-                    alt="Avatar"
-                    className="w-full h-full object-cover"
-                  />
+              {facts && facts.length !== 0 ? (
+                facts.map((fact, index) => (
+                  <div
+                    key={index}
+                    className="relative w-32 h-56 rounded-lg overflow-hidden cursor-pointer"
+                  >
+                    <img
+                      src={
+                        fact.picture
+                          ? fact.picture
+                          : "https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-simple-gray-solid-color-background-image_557027.jpg"
+                      }
+                      alt="Story Image"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-2 left-2 w-10 h-10 rounded-full overflow-hidden border-2 border-white">
+                      <img
+                        src={selectedUser?.avatar}
+                        alt="Avatar"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm">
+                      {selectedUser?.username}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center mt-4">
+                  Không có fact nào được tạo.
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm">
-                  Username
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -85,4 +168,4 @@ const HomePageFact = ({ isHomePage, isUserPage }) => {
   );
 };
 
-export default HomePageFact;
+export default Fact;
